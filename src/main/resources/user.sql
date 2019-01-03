@@ -1,0 +1,1 @@
+create table user(id int(4) not null primary key auto_increment, name char(20),address char(20));
