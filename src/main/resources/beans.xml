@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 自动生成代理类 -->
+    <aop:aspectj-autoproxy/>
+
+<!--
+    <bean id="userService" class="com.abc.service.impl.UserServiceImpl"/>
+    <bean class="com.abc.aop.UserAspect"/>
+-->
+
+<!--    <bean id="car" class="com.abc.BeanLifeCycle.Car"
+          p:brand="bmw" init-method="myInit" destroy-method="myDestroy"/>-->
+
+    <context:property-placeholder location="datasource.properties"/>
+
+    <!-- 数据源 -->
+    <bean id="datasource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+        <!-- 开启数据库密码解密-->
+        <property name="connectionProperties" value="config.decrypt=true;config.decrypt.key=${jdbc.publickey}"/>
+        <!-- 提示Druid数据源需要对数据库密码进行解密 -->
+        <property name="filters" value="config" />
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" p:dataSource-ref="datasource"/>
+
+    <!--<bean id="accountService" class="com.abc.transaction.service.impl.AccountServiceImpl" p:accountDao-ref="accountDao" p:platformTransactionManager-ref="transactionManager"/>-->
+    <!--<bean id="accountService" class="com.abc.transaction.service.impl.AccountServiceImpl" p:accountDao-ref="accountDao" p:transactionTemplate-ref="transactionTemplate"/>-->
+    <bean id="accountService" class="com.lxy.transaction.service.impl.AccountServiceImpl" p:accountDao-ref="accountDao" />
+
+    <bean id="accountDao" class="com.lxy.transaction.dao.impl.AccountDaoImpl" p:jdbcTemplate-ref="jdbcTemplate"/>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+          p:dataSource-ref="datasource"/>
+
+    <!-- 配置事务模板 针对编程式事务管理-->
+    <!--<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate" p:transactionManager-ref="transactionManager" p:isolationLevel="-1" p:propagationBehavior="0"/>-->
+
+    <!-- 声明式事务管理，使用TransactionProxyFactoryBean -->
+    <!--<bean id="accountServiceProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="target" ref="accountService"/>
+        <property name="transactionManager" ref="transactionManager"/>
+        <property name="transactionAttributes">
+            <props>
+                &lt;!&ndash;
+                    prop的格式：
+                    PROPAGATION：事务传播方式
+                    ISOLATION: 事务隔离级别
+                    READONLY: 只读（不可以进行修改，删除，新增）
+                    -EXCEPTION: 发生哪些异常回滚
+                    +EXCEPTION: 发生哪些异常不回滚
+                &ndash;&gt;
+                &lt;!&ndash;<prop key="*">PROPAGATION_REQUIRED</prop>&ndash;&gt;
+                <prop key="*">PROPAGATION_REQUIRED,+java.lang.ArithmeticException</prop>
+            </props>
+        </property>
+    </bean>
+-->
+    <!-- 声明式事务管理 使用aspectj -->
+  <!--  <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED" isolation="DEFAULT"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="pointcut" expression="execution(* com.abc.transaction.service..*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+    </aop:config>-->
+
+    <!--  声明式事务管理 annotation -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>
