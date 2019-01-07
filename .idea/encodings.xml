@@ -2,5 +2,16 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springweb" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springweb" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springweb" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springweb" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springweb/ear" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springweb/ejbs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springweb/primary-source" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springweb/projects" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springweb/projects/logging" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springweb/servlets" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springweb/servlets/servlet" charset="UTF-8" />
   </component>
 </project>

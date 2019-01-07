@@ -6,11 +6,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="springdemo" />
+        <module name="springweb" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="ear" target="1.7" />
+      <module name="ejbs" target="1.7" />
+      <module name="logging" target="1.7" />
+      <module name="primary-source" target="1.7" />
+      <module name="projects" target="1.7" />
+      <module name="servlet" target="1.7" />
+      <module name="servlets" target="1.7" />
       <module name="springdemo" target="1.7" />
+      <module name="springweb" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
