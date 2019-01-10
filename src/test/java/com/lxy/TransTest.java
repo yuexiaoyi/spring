@@ -1,12 +1,5 @@
 package com.lxy;
 
-import com.abc.aop.GreetingAspect;
-import com.abc.aop.StuBeforeAdvice;
-import com.abc.domain.Student;
-import com.abc.service.UserService;
-import com.abc.service.impl.UserServiceImpl;
-import com.abc.service.impl.Waiter;
-import com.abc.transaction.service.AccountService;
 import com.lxy.transaction.service.AccountService;
 import org.junit.Test;
 import org.springframework.aop.aspectj.annotation.AspectJProxyFactory;
