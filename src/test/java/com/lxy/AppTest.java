@@ -52,7 +52,9 @@ public class AppTest
 
         UserService service = (UserService) pf.getProxy();
 
-        service.insertUser(vo);
+//        service.insertUser(vo);
+        service.insertUser();
+//        service.updateUser(vo);
     }
 
     /**
