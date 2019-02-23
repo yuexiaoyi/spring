@@ -38,4 +38,28 @@ public class SpringDataTest {
         StudentVO vo = new StudentVO("test",20,20);
         studentRepository.save(vo);
     }
+
+    @Test
+    public void testUpdate(){
+        StudentVO vo = new StudentVO("testupdate",20,20);
+        vo.setId(5L);
+
+        studentRepository.saveAndFlush(vo);
+    }
+
+    @Test
+    public void testDelete(){
+        studentRepository.deleteById(5L);
+    }
+
+    @Test
+    public void testFind(){
+        studentRepository.findAll().forEach(System.out::println);
+    }
+
+    @Test
+    public void testFindByAge(){
+        studentRepository.findByAge(20).forEach(System.out::println);
+    }
+
 }
