@@ -7,6 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.StandardEnvironment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -27,6 +29,7 @@ import javax.sql.DataSource;
  **/
 @Configuration
 @ComponentScan(basePackages = {"com.lxy"})
+@EnableJpaRepositories(basePackages = {"com.lxy.dao"})
 @PropertySource("classpath:/jdbc.properties")
 public class JpaConfig {
     @Autowired
@@ -41,6 +44,7 @@ public class JpaConfig {
         dataSource.setPassword(env.getProperty("jdbc.password"));
         return dataSource;
     }
+
 
     @Bean(name = "jpaVendorAdapter")
     public JpaVendorAdapter jpaVendorAdapter(){
@@ -66,10 +70,11 @@ public class JpaConfig {
 
     @Configuration
     @EnableTransactionManagement
-    public static class TransactionConfig implements TransactionManagementConfigurer {
+    public  class TransactionConfig implements TransactionManagementConfigurer {
         @Inject
         private EntityManagerFactory emf;
 
+        @Bean(name = "transactionManager")
         public PlatformTransactionManager annotationDrivenTransactionManager() {
             JpaTransactionManager transactionManager = new JpaTransactionManager();
             transactionManager.setEntityManagerFactory(emf);
