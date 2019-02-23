@@ -1,6 +1,7 @@
 package com.lxy.dao;
 
 import com.lxy.vo.StudentVO;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
